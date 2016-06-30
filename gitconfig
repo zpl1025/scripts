@@ -1,0 +1,25 @@
+[alias]
+	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg = !"git lg1"
+	st = status -sb
+	co = checkout
+	br = branch
+	mg = merge
+	ci = commit
+	ds = diff --staged
+	dt = difftool
+	mt = mergetool
+	last = log -1 HEAD
+	latest = for-each-ref --sort=-committerdate --format=\"%(committername)@%(refname:short) [%(committerdate:short)] %(contents)\"
+	ls = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%cn]\" --decorate --date=short
+	hist = log --pretty=format:\"%C(yellow)%h %C(red)%d %C(reset)%s %C(green)[%an] %C(blue)%ad\" --topo-order --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	standup = log --since '1 day ago' --oneline --author zpl1025@163.com
+	undo = reset --soft HEAD^
+	amend = commit --amend -C HEAD
+[color]
+	ui = auto
+[push]
+	default = matching
