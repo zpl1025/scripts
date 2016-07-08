@@ -31,8 +31,14 @@ if [ "$count" != "1" ]; then
 	exit 1;
 fi
 
-#cmd="echo git"
-cmd="git"
+cmdgit=`which git`
+if [ $? -ne 0 ]; then
+	cmdgit="echo git"
+fi
+cmdhub=`which hub`
+if [ $? -ne 0 ]; then
+	cmdhub="echo hub"
+fi
 
 #modified=`git status | grep modified | cut -d':' -f 2 | xargs`
 modified=`git status | grep modified | cut -d':' -f 2 | sed -e "s/^ *//"`
@@ -42,26 +48,22 @@ if [ "$modified" != "" ]; then
 		exit 1
 	fi
 	echo "${CON}[MSG] Updating repository...${COFF}"
-	$cmd fetch lctt 
-	$cmd pull lctt master
-	$cmd push origin master
+	$cmdgit fetch lctt 
+	$cmdgit pull lctt master
+	$cmdgit push origin master
 
 	filename=`basename "$modified"`
 	echo "${CON}[MSG] Filename: $filename${COFF}"
 	if [ "$param" == "translated" ]; then
 		dstdir=`dirname "$modified" | sed -e "s/sources/translated/"`
 		sed -i "" -e "s/译者ID/zpl1025/g" "$modified"
-		$cmd mv "$modified" "$dstdir"
+		$cmdgit mv "$modified" "$dstdir"
 	fi
 	echo "${CON}[MSG] Commit to repository...${COFF}"
-	$cmd commit -am "[$param] $filename" 
-	$cmd push origin master 
+	$cmdgit commit -am "[$param] $filename" 
+	$cmdgit push origin master 
 	echo "${CON}[MSG] Create pull request...${COFF}"
-	if [ "$cmd" == "git" ]; then
-		hub pull-request -m "[$param] $filename" -b LCTT:master
-	else
-		echo hub pull-request -m "[$param] $filename" -b LCTT:master
-	fi
+	$cmdhub pull-request -m "[$param] $filename" -b LCTT:master
 	echo "${CON}[MSG] Done.${COFF}"
 fi
 
