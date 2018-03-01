@@ -3,8 +3,8 @@
 # for english locale only...
 
 TMPFILE_PREFIX="__myping_tmp_file"
-IPSEG="192.168.88"
-IPMIN=2
+IPSEG="192.168.10"
+IPMIN=100
 IPMAX=254
 
 echo "looking host from $IPSEG"."$IPMIN to $IPSEG"."$IPMAX ..."
