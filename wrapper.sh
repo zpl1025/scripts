@@ -3,6 +3,8 @@
 i=1
 while [ $i -le $# ]; do
 	ITEM="${!i}"
+	# for shell does not support ${!i}
+	# ITEM=`eval echo '$'"$i"`
 	echo "$ITEM" | grep -q " "
 	if [ $? -eq 0 ]; then
 		PARAM="$PARAM \"$ITEM\""
